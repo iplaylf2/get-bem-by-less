@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Demo</title>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="./bem.ts/dist/bem.js"></script>
+    <link rel="stylesheet/less" type="text/css" href="./demo.less" />
+
+    <script src="https://unpkg.com/less@3"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { createBlock } = BEM;
+
+      const demoBlock = createBlock("demo");
+
+      const Demo = function() {
+        return <div className={`${demoBlock}`}>咕咕</div>;
+      };
+
+      ReactDOM.render(<Demo />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

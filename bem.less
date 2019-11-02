@@ -1,0 +1,24 @@
+.b(@block) {
+  @prefixElement: "__";
+  @prefixModifier: "_";
+  @prefixModifierValue: "_";
+
+  @b: ~".@{block}";
+  @te: ~"@{b}@{prefixElement}";
+  @tm: ~"@{b}@{prefixModifier}";
+
+  .e(@element) {
+    @e: ~"@{te}@{element}";
+    @tm: ~"@{e}@{prefixModifier}";
+
+    .m(@modifier) {
+      @m: ~"@{tm}@{modifier}";
+      @tv: ~"@{m}@{prefixModifierValue}";
+    }
+  }
+
+  .m(@modifier) {
+    @m: ~"@{tm}@{modifier}";
+    @tv: ~"@{m}@{prefixModifierValue}";
+  }
+}

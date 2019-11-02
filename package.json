@@ -1,0 +1,18 @@
+{
+  "name": "get-bem-by-less",
+  "version": "1.0.0",
+  "description": "get bem by less",
+  "private": true,
+  "dependencies": {
+    "typescript": "^3.6.4"
+  },
+  "devDependencies": {
+    "serve": "^11.2.0"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "demo": "npx serve"
+  },
+  "author": "",
+  "license": "ISC"
+}
