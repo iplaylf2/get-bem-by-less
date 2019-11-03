@@ -43,12 +43,14 @@
 
         return (
           <div className={`${demoBlock}`}>
-            {viewData.map(([value, unit]) => (
+            {viewData.map(([value, unit], i) => (
               <div className={`${demoBlock.te("card")}`}>
                 <div className={`${demoBlock.te("value")}`}>
-                  {value.split("").map(c => (
+                  {value.split("").map((c, j) => (
                     <div
-                      className={`${demoBlock.te("char").tm("red", c === "5")}`}
+                      className={`${demoBlock
+                        .te("char")
+                        .tm("red", c === limit[i * 2 + j])}`}
                     >
                       {c}
                     </div>
@@ -75,6 +77,8 @@
 
           return [minute, second, millisecond];
         })(1000);
+
+      const limit = ["5", "9", "5", "9", "9", "9", "9"];
 
       ReactDOM.render(<Demo />, document.getElementById("root"));
     </script>
