@@ -7,21 +7,74 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <script src="./bem.ts/dist/bem.js"></script>
-    <link rel="stylesheet/less" type="text/css" href="./demo.less" />
+    <script type="module">
+      import { createBlock } from "./bem.ts/dist/bem.js";
+      window.createBlock = createBlock;
+    </script>
 
+    <link rel="stylesheet/less" type="text/css" href="./demo.less" />
     <script src="https://unpkg.com/less@3"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      const { createBlock } = BEM;
+      const { useState, useEffect } = React;
+
+      const startTime = Date.now();
 
       const demoBlock = createBlock("demo");
-
       const Demo = function() {
-        return <div className={`${demoBlock}`}>咕咕</div>;
+        const [data, setData] = useState(() => splitSpan(0));
+
+        const [m, s, ms] = data,
+          viewData = [
+            [String(m).padStart(2, "0"), "m"],
+            [String(s).padStart(2, "0"), "s"],
+            [String(ms).padStart(3, "0"), "ms"]
+          ];
+
+        useEffect(() => {
+          const t = setInterval(() => {
+            setData(splitSpan(Date.now() - startTime));
+          });
+
+          return () => clearInterval(t);
+        }, []);
+
+        return (
+          <div className={`${demoBlock}`}>
+            {viewData.map(([value, unit]) => (
+              <div className={`${demoBlock.te("card")}`}>
+                <div className={`${demoBlock.te("value")}`}>
+                  {value.split("").map(c => (
+                    <div
+                      className={`${demoBlock.te("char").tm("red", c === "5")}`}
+                    >
+                      {c}
+                    </div>
+                  ))}
+                </div>
+                <div className={`${demoBlock.te("unit")}`}>{unit}</div>
+              </div>
+            ))}
+          </div>
+        );
       };
+
+      const splitSpan = ((s, m = s * 60) =>
+        function(span) {
+          span -= Math.floor(span / (m * 60)) * m * 60;
+
+          const minute = Math.floor(span / m);
+          span -= minute * m;
+
+          const second = Math.floor(span / s);
+          span -= second * s;
+
+          const millisecond = span;
+
+          return [minute, second, millisecond];
+        })(1000);
 
       ReactDOM.render(<Demo />, document.getElementById("root"));
     </script>
